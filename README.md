@@ -27,3 +27,7 @@ The directory structure of this project is as follows:
   using Mockito.
 * **build-scripts**: Contains only the Jenkinsfile of this project. Note that this Pipeline is not an example of a
   pipeline for this project, and it is **not necessary** for the project to run.
+
+### Project structure at a glance
+
+![Alt text](./Jenkins-shared-library.jpg?raw=true "Project structure")
