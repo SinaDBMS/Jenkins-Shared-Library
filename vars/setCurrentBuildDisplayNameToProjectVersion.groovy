@@ -8,7 +8,7 @@ import de.darian.core.JenkinsEngine
 
 
 /**
- * Sets the current build info. This method has two boolean parameters:<br/><br/>
+ * Sets the current build info in jenkins classic view to the project version specified in pom.xml
  *
  *
  * @param config <code>setDisplayName</code>, <code>setDescription</code>
