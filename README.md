@@ -57,7 +57,88 @@ def call(Map config) {
 ```
 
 ## src
-Source code of the Project in Groovy. You should put the business logic of the project here.
+This directory is similar to Java source directory structure that hosts classes and packages. But the source code
+in here is written in Groovy and __NOT__ in Java. You should put the business logic of your code in this directory.
+This has two advantages:
+
+* Your Code would become highly structured; You leverage from packages and classes and in turn Object Oriented Programming.
+* You could easily perform unit tests using Mockito in Java.
+
+_Src_ contains two packages: _core_ and _steps_.
+
+#### core
+This package holds _Jenkins_ interface and an implementation of it, _JenkinsEngine_ class. There are already dozens of
+functionalities of Jenkins API implemented. Here's a code snippet of JenkinsEngine:
+
+```
+package de.darian.core
+
+class JenkinsEngine implements Jenkins {
+
+    private def script
+
+    /**
+     *
+     * @param script
+     */
+    JenkinsEngine(def script) {
+        this.script = script
+    }
+    
+    @Override
+    void echo(String text) {
+        this.script.echo(text)
+    }
+    
+    // Other methods ...
+}
+```
+
+Note that this class holds a reference to the script, from which this code is being called. Therefore always pass a reference
+to the pipeline script as explained above in __vars__ section.
+
+#### steps
+In this package you could write classes that encapsulate business logics and rely on _Jenkins_ interface to execute code
+on Jenkins nodes. An examples of such a step is _MavenSteps_:
+
+```
+
+package de.darian.steps
+
+import de.darian.core.Jenkins
+
+
+class MavenSteps implements Serializable {
+
+    private Jenkins jenkins
+
+    /**
+     *
+     * @param jenkins
+     */
+    MavenSteps(Jenkins jenkins) {
+        this.jenkins = jenkins
+    }
+
+    /**
+     * returns the version of the project which is specified in pom.xml.
+     *
+     * @return
+     */
+    String getProjectVersion() {
+        String command = 'mvn -q -Dexec.executable=echo -Dexec.args=\'${project.version}\' --non-recursive exec:exec'
+        return this.jenkins.sh(command, true, "Maven version")
+    }
+    
+    // Other methods ...
+
+}
+```
+
+The <code>getProjectVersion()</code> method of the MavenSteps retrieves the version of the project specified in _pom.xml_
+(e.g. 1.0.0-SNAPSHOT).
+As you see, the <code>sh</code> method of Jenkins interface is used to execute the command on a Jenkins node.
+
 
 ## test
 Unit tests written in Java. To perform unit tests against your groovy classes in _src_, mock Jenkins using Mockito.
