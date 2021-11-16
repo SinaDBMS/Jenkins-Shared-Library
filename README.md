@@ -36,3 +36,5 @@ The directory structure of this project is as follows:
 
 In order to be able to use the implemented functions in _vars_ directory, add the library to your Jenkins server in 
 _Manage Jenkins -> Configure System_ under _Global Pipeline Libraries_:
+
+![Alt text](./Jenkins-shared-library%20installation%20on%20Jenkins.png?raw=true "Project structure")
