@@ -31,7 +31,7 @@ should act as a layer between the pipeline and the business logic in _src_ direc
 possible and don't put any business logic here. Otherwise, you loose the benefit of unit testing, which is the sole
 purpose of this project. Here's an example of a Groovy script that performs a <code>mvn clean install</code>:
 
-```
+```groovy
 import de.darian.steps.MavenSteps
 import de.darian.core.JenkinsEngine
 
@@ -50,7 +50,7 @@ Finally we call the _performMavenCleanInstall_ method of the MavenSteps to build
 
 The call method can also accept arguments from the calling pipeline as follows:
 
-```
+```groovy
 def call(Map config) {
     String parameter_1 = config.parameter1 as String
     int parameter_2 = config.parameter2 as int
@@ -76,7 +76,7 @@ _Src_ contains two packages: _core_ and _steps_.
 This package holds _Jenkins_ interface and an implementation of it, _JenkinsEngine_ class. There are already dozens of
 functionalities of Jenkins API implemented. Here's a code snippet of JenkinsEngine:
 
-```
+```groovy
 package de.darian.core
 
 class JenkinsEngine implements Jenkins {
@@ -108,7 +108,7 @@ reference to the pipeline script as explained above in __vars__ section.
 In this package you could write classes that encapsulate business logics and rely on _Jenkins_ interface to execute code
 on Jenkins nodes. An examples of such a step is _MavenSteps_:
 
-```
+```groovy
 
 package de.darian.steps
 
@@ -156,7 +156,7 @@ This is the directory where you write your unit tests in Java. There are two pac
 package contains only one class, namely _JenkinsMock_, that implements _Jenkins_ interface. It's the counterpart of
 _JenkinsEngine_ in _src_ directory, with the difference that it's only used by test classes to mock Jenkins.
 
-```
+```groovy
 package de.darian.util;
 
 import de.darian.core.Jenkins;
@@ -175,7 +175,7 @@ public class JenkinsMock implements Jenkins {
 The other package contains the unit tests and Each class tests its corresponding class in _src_. An example is the class
 _CommonStepsTest_. Note that how we use _Mockito_ to mock out Jenkins.
 
-```
+```groovy
 package de.darian.steps;
 
 // imports ...
